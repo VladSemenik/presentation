@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>DOM Events</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/solarized.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+	<style>
+		h2 {
+			color: #f5f5dc !important;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal" style="background-color: black;">
+		<div class="slides">
+			<!-- devices -->
+			<section>
+				DOM Events
+			</section>
+			<section>
+				<h2 class="">TRIGGERS</h2>
+				<p class="fragment highlight-blue fade-up" data-fragment-index="1">mouse</p>
+				<p class="fragment highlight-blue fade-up" data-fragment-index="2">keyboard</p>
+				<p class="fragment highlight-blue fade-up" data-fragment-index="3">touchs</p>
+				<p class="fragment fade-up highlight-blue" data-fragment-index="4">gamepad</p>
+				<p class="fragment fade-up highlight-green" data-fragment-index="5">...</p>
+			</section>
+
+			<!-- handling -->
+			<section>
+				<section>
+					<h2>EVENT HANDLING MODELS</h2>
+					<ul>
+						<li>inline </li>
+						<li>traditional</li>
+						<li>W3C</li>
+					</ul>
+				</section>
+				<section>
+					<h2>INLINE EVENT HANDLING MODEL</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+							<div id="click" onclick="getName()">divName</div>
+							<script>
+								const div = document.querySelector('#click');
+								function getName(event) {
+									console.log(event.target.innerHTML);
+								}
+							</script>
+					</code></pre>
+				</section>
+				<section>
+					<h2>TRADITIONAL EVENT HANDLING MODEL</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+								<div id="click">divName</div>
+								<script>
+									const div = document.querySelector('#click');
+									div.onclick = function () {
+										console.log(this.innerHTML);
+									}
+								</script>
+						</code></pre>
+				</section>
+				<section>
+					<h2>W3C EVENT HANDLING MODEL</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+									<script>
+										element.addEventListener(eventName, eventHandler, useCapture);
+										assert(typeof eventName === 'string');
+										assert(typeof eventHandler === 'function');
+										assert(typeof useCapture === 'boolean');
+									</script>
+
+									<div id="click">divName</div>
+									<script>
+										const div = document.querySelector('#click');
+										div.addEventListener('click', (event) => {
+											console.log(event.target.innerHTML);
+										});
+									</script>
+							</code></pre>
+				</section>
+			</section>
+
+			<!-- events -->
+			<section>
+				<section data-transition="concave">
+					<h2 class="">MOUSE EVENTS</h2>
+					<p class="fragment fade-up" data-fragment-index="1">click, dblclick, contextmenu</p>
+					<p class="fragment fade-up" data-fragment-index="2">mousedown</p>
+					<p class="fragment fade-up" data-fragment-index="2">mouseup</p>
+					<p class="fragment fade-up" data-fragment-index="3">mouseenter</p>
+					<p class="fragment fade-up" data-fragment-index="3">mouseout</p>
+					<p class="fragment fade-up" data-fragment-index="4">mouseleave</p>
+					<p class="fragment fade-up" data-fragment-index="4">mouseover</p>
+					<p class="fragment fade-up" data-fragment-index="5">mousemove</p>
+				</section>
+			</section>
+			<section>
+				<section data-transition="concave">
+					<h2 class="">KEYBOARD EVENTS</h2>
+					<p class="fragment fade-up" data-fragment-index="1">keydown</p>
+					<p class="fragment fade-up" data-fragment-index="2">keypress</p>
+					<p class="fragment fade-up" data-fragment-index="3">keyup</p>
+				</section>
+			</section>
+			<section>
+				<section data-transition="concave">
+					<h2 class="">TOUCHS EVENTS</h2>
+					<p class="fragment fade-up" data-fragment-index="1">ontouchcancel</p>
+					<p class="fragment fade-up" data-fragment-index="2">ontouchend</p>
+					<p class="fragment fade-up" data-fragment-index="3">ontouchmove</p>
+					<p class="fragment fade-up" data-fragment-index="4">ontouchstart</p>
+				</section>
+			</section>
+			<section>
+				<section data-transition="concave">
+					<h2 class="">DRAG EVENTS</h2>
+					<p class="fragment fade-up" data-fragment-index="1">ondrag</p>
+					<p class="fragment fade-up" data-fragment-index="2">ondragend</p>
+					<p class="fragment fade-up" data-fragment-index="3">ondragenter</p>
+					<p class="fragment fade-up" data-fragment-index="4">ondragleave</p>
+					<p class="fragment fade-up" data-fragment-index="5">ondragover</p>
+					<p class="fragment fade-up" data-fragment-index="6">ondragstart</p>
+					<p class="fragment fade-up" data-fragment-index="7">ondrop</p>
+				</section>
+			</section>
+
+			<!-- event object -->
+			<section>
+				<section>
+					<h2>EVENT OBJECT</h2>
+					All event objects in the DOM are based on the Event Object.
+				</section>
+				<section>
+					<h2>Methods</h2>
+					<ul>
+						<li>stopPropagation()</li>
+						<li>preventDefault()</li>
+						<li>stopImmediatePropagation()</li>
+						<li>createEvent()</li>
+						<li>composedPath()</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Properties</h2>
+					<ul>
+						<li>target</li>
+						<li>currentTarget</li>
+						<li>type</li>
+						<li>eventPhase</li>
+						<li>bubbles</li>
+						<li>cancelBubble</li>
+					</ul>
+					<p data-markdown>[more info](https://www.w3schools.com/jsref/obj_event.asp)</p>
+				</section>
+				<section>
+					<pre><code class="hljs" data-trim contenteditable>
+							<div id="click">Click me</div>
+							<script>
+								var div = document.querySelector('#click');
+								div.addEventListener('click', function (event) {
+
+									assert(typeof event === 'object');
+									assert(event instanceof Event);
+									assert(event.target === div);
+								});
+							</script>
+					</code></pre>
+				</section>
+			</section>
+
+			<!-- objects -->
+			<section>
+				<section data-transition="concave">
+					<h2 class="">THE MOUSE EVENT OBJECT</h2>
+					<aside class="notes">
+
+					</aside>
+					<section data-markdown>
+						<script type="text/template">
+							```
+							console.dir(MouseEvent);
+							```
+							<ul>
+									<li>altKey</li>
+									<li>button</li>
+									<li>clientX</li>
+									<li>clientY</li>
+									<li>screenX</li>
+									<li>screenY</li>
+								</ul>
+								<p data-markdown>[more info](https://www.w3schools.com/jsref/obj_mouseevent.asp)</p>		
+					</script>
+					</section>
+				</section>
+				<section data-transition="concave">
+					<h2 class="">THE KEYBOARD EVENT OBJECT</h2>
+					<aside class="notes">
+
+					</aside>
+					<ul>
+						<li>altKey</li>
+						<li>shiftKey</li>
+						<li>key</li>
+						<li>keyCode</li>
+					</ul>
+					<p data-markdown>[more info](https://www.w3schools.com/jsref/obj_keyboardevent.asp)</p>
+				</section>
+				<section data-transition="concave">
+					<h2 class="">THE TOUCH EVENT OBJECT</h2>
+					<aside class="notes">
+
+					</aside>
+					<ul>
+						<li>changedTouches</li>
+						<li>targetTouches</li>
+						<li>touches</li>
+					</ul>
+					<p data-markdown>[more info](https://www.w3schools.com/jsref/obj_touchevent.asp)</p>
+				</section>
+				<section data-transition="concave">
+					<h2 class="">THE DRAG EVENT OBJECT</h2>
+					<aside class="notes">
+
+					</aside>
+					<ul>
+						<li>dataTransfer</li>
+					</ul>
+					<p data-markdown>[more info](https://www.w3schools.com/jsref/obj_dragevent.asp)</p>
+				</section>
+			</section>
+
+			<!-- event dom trip -->
+			<section>
+				<section data-transition="concave">
+					<h2>EVENT DOM TRIP</h2>
+					<p>capturing: document → e.target</p>
+					<p>bubbling: e.target → document</p>
+				</section>
+				<section data-transition="concave" data-background="./img/eventflow.png" data-background-repeat="no-repeat"
+				 data-background-size="50%">
+				</section>
+			</section>
+
+			<!-- event delegation -->
+			<section>
+				<section>
+					<h2>EVENT DELEGATION</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+							<ul>
+								<li class="orders">order1</li>
+								<li class="orders">order2</li>
+								<li class="orders">order3</li>
+								<!-- and one more -->
+								<!-- and one more -->
+								<!-- and one more -->
+							</ul>
+					</code></pre>
+					<ul>
+						<li>add eventHandler to each item</li>
+						<li>handle dynamicly created items</li>
+						<li>remove eventHandlers when item removed</li>
+					</ul>
+				</section>
+				<section>
+					<h2>EVENT DELEGATION INSTED</h2>
+					<ul>
+						<li>listen event on parent</li>
+						<li>all child events bubble to parent</li>
+						<li>check e.target</li>
+					</ul>
+				</section>
+			</section>
+
+			<!-- thank you -->
+			<section>
+				<h2>THANK YOU!</h2>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			],
+			width: 960,
+			height: 700,
+
+			// Factor of the display size that should remain empty around the content
+			margin: 0.1,
+
+			// Bounds for smallest/largest possible scale to apply to content
+			minScale: 0.2,
+			maxScale: 1.5
+		});
+	</script>
+</body>
+
+</html>
